@@ -50,9 +50,11 @@ class _HomePage2State extends State<HomePage2> {
       theme: ThemeData(primarySwatch: Colors.purple),
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Jogo dos Países',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          title: Center(
+            child: Text(
+              'Jogo dos Países',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            ),
           ),
         ),
         body: Padding(

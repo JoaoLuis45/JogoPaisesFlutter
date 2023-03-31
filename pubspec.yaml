@@ -31,6 +31,25 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.5
+  flutter_native_splash: ^2.0.1+1
+  flutter_launcher_icons: ^0.9.2
+
+
+
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/images/paises.png"
+  android: true
+  ios: true
+
+flutter_icons:
+  image_path: "assets/images/paises.png"
+  ios: true
+  remove_alpha_ios: true
+  android: "launcher_icon"
+  adaptative_icon_background: "#ffffff"
+  adaptative_icon_foreground: "assets/images/paises.png"
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -40,11 +59,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_native_splash: ^2.0.1+1
 
-flutter_native_splash:
-  color: "#ffffff"
-  image: assets/images/paises.png
+
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
