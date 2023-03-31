@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
-
+import 'resultado.dart';
 class Jogo extends StatefulWidget {
   static String pais = 'ad';
   static String img = 'https://flagcdn.com/256x192/$pais.png';
@@ -11,7 +11,9 @@ class Jogo extends StatefulWidget {
   static List alternativas = ['Andorra', 'Mexico', 'Egito', 'Russia'];
   static String acertouErrou = '';
   static List numsEmbaralahados = [0, 1, 2, 3];
+  static bool clicou = false;
   static const routeName = 'jogo';
+  static int acertos = 0;
   const Jogo({super.key});
 
   @override
@@ -31,6 +33,7 @@ class _JogoState extends State<Jogo> {
     }
 
     void proximaPergunta() {
+      Jogo.clicou = false;
       Jogo.numsEmbaralahados = sorteiaNum();
       Jogo.acertouErrou = '';
       setState(() {
@@ -61,10 +64,11 @@ class _JogoState extends State<Jogo> {
         verificacao = true;
         setState(() {
           Jogo.acertouErrou = 'Acertou!';
+          Jogo.acertos++;
         });
       } else {
         setState(() {
-          Jogo.acertouErrou = 'Errou!';
+          Jogo.acertouErrou = 'Errou: ${paisCorreto}';
         });
       }
 
@@ -72,6 +76,7 @@ class _JogoState extends State<Jogo> {
     }
 
     Future<void> espera() async {
+      Jogo.clicou = true;
       return Future.delayed(Duration(seconds: 2), () => proximaPergunta());
     }
 
@@ -90,13 +95,27 @@ class _JogoState extends State<Jogo> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Text(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                    onPressed: () => Navigator.pushNamed(context, Resultado.routeName,arguments: ScreenArgumentsResultado(Jogo.acertos)),
+                    child: Text('Parar',style: TextStyle(fontSize: 30),),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(50,10,50,10)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                    ),
+                    ),
+                ),
+                Text(
                     'Pergunta ${Jogo.numeroPergunta}',
                     style: TextStyle(fontSize: 25),
                   ),
-                ),
+  
+                ],),
                 Image.network(Jogo.img),
                 Text(
                   '${Jogo.acertouErrou}',
@@ -106,10 +125,11 @@ class _JogoState extends State<Jogo> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      verificaResposta(Jogo.pais,
-                          Jogo.alternativas[Jogo.numsEmbaralahados[0]]);
-
-                      espera();
+                      if (!Jogo.clicou) {
+                        verificaResposta(Jogo.pais,
+                            Jogo.alternativas[Jogo.numsEmbaralahados[0]]);
+                        espera();
+                      }
                     },
                     child: Text(
                       '${Jogo.alternativas[Jogo.numsEmbaralahados[0]]}',
@@ -129,10 +149,11 @@ class _JogoState extends State<Jogo> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      verificaResposta(Jogo.pais,
-                          Jogo.alternativas[Jogo.numsEmbaralahados[1]]);
-
-                      espera();
+                      if (!Jogo.clicou) {
+                        verificaResposta(Jogo.pais,
+                            Jogo.alternativas[Jogo.numsEmbaralahados[1]]);
+                        espera();
+                      }
                     },
                     child: Text(
                       '${Jogo.alternativas[Jogo.numsEmbaralahados[1]]}',
@@ -152,10 +173,11 @@ class _JogoState extends State<Jogo> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      verificaResposta(Jogo.pais,
-                          Jogo.alternativas[Jogo.numsEmbaralahados[2]]);
-
-                      espera();
+                      if (!Jogo.clicou) {
+                        verificaResposta(Jogo.pais,
+                            Jogo.alternativas[Jogo.numsEmbaralahados[2]]);
+                        espera();
+                      }
                     },
                     child: Text(
                       '${Jogo.alternativas[Jogo.numsEmbaralahados[2]]}',
@@ -175,10 +197,11 @@ class _JogoState extends State<Jogo> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      verificaResposta(Jogo.pais,
-                          Jogo.alternativas[Jogo.numsEmbaralahados[3]]);
-
-                      espera();
+                      if (!Jogo.clicou) {
+                        verificaResposta(Jogo.pais,
+                            Jogo.alternativas[Jogo.numsEmbaralahados[3]]);
+                        espera();
+                      }
                     },
                     child: Text(
                       '${Jogo.alternativas[Jogo.numsEmbaralahados[3]]}',
@@ -208,14 +231,3 @@ class ScreenArguments {
   ScreenArguments(this.lista);
 }
 
-MaterialStateProperty<Color> getColor(Color color, Color colorPressed) {
-  final getColor = (Set<MaterialState> states) {
-    if (states.contains(MaterialState.pressed)) {
-      return colorPressed;
-    } else {
-      return color;
-    }
-  };
-
-  return MaterialStateProperty.resolveWith(getColor);
-}

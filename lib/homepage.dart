@@ -6,10 +6,11 @@ import 'dart:io';
 import 'cert.dart';
 import 'package:http/http.dart' as http;
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage2 extends StatefulWidget {
+  static bool isLoading = false;
+  const HomePage2({super.key});
 
-  Future<List> paises() async {
+  static Future<List> paises() async {
     //certificado
     HttpOverrides.global = MyHttpOverrides();
 
@@ -21,18 +22,15 @@ class HomePage extends StatelessWidget {
     Map paisesAbvNome = {};
     await future.then((response) {
       if (response.statusCode == 200) {
-        var paises = json.decode(response.body);
+        var paises = json.decode(utf8.decode(response.bodyBytes));
 
         for (int i = 0; i <= 272; i++) {
           paisesABV.add(
               (paises[i]['id']['ISO-3166-1-ALPHA-2']).toString().toLowerCase());
-          var paisesNomeUtf8encode =
-              utf8.encode(paises[i]['nome']['abreviado']);
-          var paisesNomeUtf8Decode = utf8.decode(paisesNomeUtf8encode);
-          paisesNome.add(paisesNomeUtf8Decode);
+          paisesNome.add(paises[i]['nome']['abreviado']);
           paisesAbvNome.addAll({paisesABV[i]: paisesNome[i]});
         }
-        print(paisesAbvNome);
+
         List abv = paisesABV;
       } else {
         print('erro');
@@ -41,6 +39,11 @@ class HomePage extends StatelessWidget {
     return [paisesABV, paisesAbvNome];
   }
 
+  @override
+  State<HomePage2> createState() => _HomePage2State();
+}
+
+class _HomePage2State extends State<HomePage2> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -63,15 +66,25 @@ class HomePage extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      paises().then((value) {
-                        Navigator.pushNamed(context, 'jogo',
+                      if (!HomePage2.isLoading) {
+                        setState(() {
+                          HomePage2.isLoading = true;
+                        });
+                      }
+
+                      HomePage2.paises().then((value) {
+                        Navigator.pushNamed(context, Jogo.routeName,
                             arguments: ScreenArguments(value));
                       });
                     },
-                    child: Text(
-                      'Jogar',
-                      style: TextStyle(fontSize: 50),
-                    ),
+                    child: HomePage2.isLoading
+                        ? CircularProgressIndicator(
+                            color: Colors.white)
+                          
+                        : Text(
+                            'Jogar',
+                            style: TextStyle(fontSize: 50),
+                          ),
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(20)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
