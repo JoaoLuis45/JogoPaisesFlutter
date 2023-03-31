@@ -84,12 +84,20 @@ class _JogoState extends State<Jogo> {
       theme: ThemeData(primarySwatch: Colors.purple),
       home: Scaffold(
         appBar: AppBar(
-          title: Center(
+
+          actions: [
+            IconButton(onPressed: (){
+              Navigator.pushNamed(context, Resultado.routeName,arguments: ScreenArgumentsResultado(Jogo.acertos));
+            }, icon: Icon(Icons.pause))
+          ],
+          title: Align(
+            alignment: Alignment.centerLeft,
             child: Text(
-              'Jogo dos Países',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-            ),
+                'Jogo dos Países',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
           ),
+
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -97,31 +105,14 @@ class _JogoState extends State<Jogo> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ElevatedButton(
-                    onPressed: () => Navigator.pushNamed(context, Resultado.routeName,arguments: ScreenArgumentsResultado(Jogo.acertos)),
-                    child: Text('Parar',style: TextStyle(fontSize: 30),),
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(50,10,50,10)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                    ),
-                    ),
-                ),
                 Text(
                     'Pergunta ${Jogo.numeroPergunta}',
                     style: TextStyle(fontSize: 25),
                   ),
-  
-                ],),
                 Image.network(Jogo.img),
                 Text(
                   '${Jogo.acertouErrou}',
-                  style: TextStyle(fontSize: 50),
+                  style: TextStyle(fontSize: 30),
                 ),
                 SizedBox(
                   width: double.infinity,
@@ -135,7 +126,7 @@ class _JogoState extends State<Jogo> {
                     },
                     child: Text(
                       '${Jogo.alternativas[Jogo.numsEmbaralahados[0]]}',
-                      style: TextStyle(fontSize: 40),
+                      style: TextStyle(fontSize: 30),
                     ),
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(10)),
@@ -159,7 +150,7 @@ class _JogoState extends State<Jogo> {
                     },
                     child: Text(
                       '${Jogo.alternativas[Jogo.numsEmbaralahados[1]]}',
-                      style: TextStyle(fontSize: 40),
+                      style: TextStyle(fontSize: 30),
                     ),
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(10)),
@@ -183,7 +174,7 @@ class _JogoState extends State<Jogo> {
                     },
                     child: Text(
                       '${Jogo.alternativas[Jogo.numsEmbaralahados[2]]}',
-                      style: TextStyle(fontSize: 40),
+                      style: TextStyle(fontSize: 30),
                     ),
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(10)),
@@ -207,7 +198,7 @@ class _JogoState extends State<Jogo> {
                     },
                     child: Text(
                       '${Jogo.alternativas[Jogo.numsEmbaralahados[3]]}',
-                      style: TextStyle(fontSize: 40),
+                      style: TextStyle(fontSize: 30),
                     ),
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all(EdgeInsets.all(10)),
