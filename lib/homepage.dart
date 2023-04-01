@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'cert.dart';
 import 'package:http/http.dart' as http;
-
+import 'app_config.dart';
 class HomePage2 extends StatefulWidget {
   static bool isLoading = false;
   const HomePage2({super.key});
@@ -47,12 +47,21 @@ class _HomePage2State extends State<HomePage2> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.purple),
+      theme: ThemeData(
+          brightness: Configs.light ? Brightness.dark : Brightness.light,
+          primarySwatch: Colors.purple),
       home: Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () => exit(0), icon: Icon(Icons.exit_to_app_sharp))
+          ],
+          leading: IconButton(
+              onPressed: () => Navigator.pushNamed(context, 'config'),
+              icon: Icon(Icons.miscellaneous_services)),
           title: Center(
             child: Text(
-              'Jogo dos Países',
+              'CountryGuess',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
           ),
@@ -80,9 +89,7 @@ class _HomePage2State extends State<HomePage2> {
                       });
                     },
                     child: HomePage2.isLoading
-                        ? CircularProgressIndicator(
-                            color: Colors.white)
-                          
+                        ? CircularProgressIndicator(color: Colors.white)
                         : Text(
                             'Jogar',
                             style: TextStyle(fontSize: 50),

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:httprequest/app_config.dart';
 import 'package:httprequest/homepage.dart';
 import 'jogo.dart';
 
@@ -16,12 +19,19 @@ class _ResultadoState extends State<Resultado> {
     final args =
         ModalRoute.of(context)!.settings.arguments as ScreenArgumentsResultado;
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.purple),
+      theme: ThemeData(
+        brightness: Configs.light? Brightness.dark:Brightness.light,
+        primarySwatch: Colors.purple),
       home: Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(onPressed: () => exit(0), icon: Icon(Icons.exit_to_app_sharp))
+          ],
+          leading: IconButton(onPressed: () => Navigator.pushNamed(context, 
+          'config'), icon: Icon(Icons.miscellaneous_services)),
           title: Center(
             child: Text(
-              'Jogo dos Países',
+              'CountryGuess',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
           ),

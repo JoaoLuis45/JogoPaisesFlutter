@@ -3,7 +3,7 @@ import 'homepage.dart';
 import 'jogo.dart';
 import 'resultado.dart';
 import 'dart:async';
-
+import 'app_config.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialization(null);
@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomePage2(),
         Jogo.routeName: (context) => Jogo(),
         Resultado.routeName: (context) => Resultado(),
+        Configs.routeName:(context) => Configs(),
       },
     );
   }
