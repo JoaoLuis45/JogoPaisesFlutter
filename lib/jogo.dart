@@ -99,7 +99,7 @@ class _JogoState extends State<Jogo> {
             alignment: Alignment.centerLeft,
             child: Text(
               'Jogo dos Países',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
         ),
