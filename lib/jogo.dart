@@ -106,153 +106,149 @@ class _JogoState extends State<Jogo> {
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  'Pergunta ${Jogo.numeroPergunta}',
-                  style: TextStyle(fontSize: 25),
-                ),
-                Image.network(Jogo.img),
-                Text(
-                  '${Jogo.acertouErrou}',
-                  style: TextStyle(fontSize: 30),
-                ),
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (!Jogo.clicou) {
-                                verificaResposta(
-                                    Jogo.pais,
-                                    Jogo.alternativas[
-                                        Jogo.numsEmbaralahados[0]]);
-                                espera();
-                              }
-                            },
-                            child: Text(
-                              '${Jogo.alternativas[Jogo.numsEmbaralahados[0]]}',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 30),
-                            ),
-                            style: ButtonStyle(
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.all(10)),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (!Jogo.clicou) {
-                                verificaResposta(
-                                    Jogo.pais,
-                                    Jogo.alternativas[
-                                        Jogo.numsEmbaralahados[1]]);
-                                espera();
-                              }
-                            },
-                            child: Text(
-                              '${Jogo.alternativas[Jogo.numsEmbaralahados[1]]}',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 30),
-                            ),
-                            style: ButtonStyle(
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.all(10)),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (!Jogo.clicou) {
-                                verificaResposta(
-                                    Jogo.pais,
-                                    Jogo.alternativas[
-                                        Jogo.numsEmbaralahados[2]]);
-                                espera();
-                              }
-                            },
-                            child: Text(
-                              '${Jogo.alternativas[Jogo.numsEmbaralahados[2]]}',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 30),
-                            ),
-                            style: ButtonStyle(
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.all(10)),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (!Jogo.clicou) {
-                                verificaResposta(
-                                    Jogo.pais,
-                                    Jogo.alternativas[
-                                        Jogo.numsEmbaralahados[3]]);
-                                espera();
-                              }
-                            },
-                            child: Text(
-                              '${Jogo.alternativas[Jogo.numsEmbaralahados[3]]}',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 30),
-                            ),
-                            style: ButtonStyle(
-                              padding:
-                                  MaterialStateProperty.all(EdgeInsets.all(10)),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    'Pergunta ${Jogo.numeroPergunta}',
+                    style: TextStyle(fontSize: 25),
                   ),
-                ),
-              ],
+                  Image.network(Jogo.img),
+                  Text(
+                    '${Jogo.acertouErrou}',
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  Container(
+                          margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (!Jogo.clicou) {
+                                  verificaResposta(
+                                      Jogo.pais,
+                                      Jogo.alternativas[
+                                          Jogo.numsEmbaralahados[0]]);
+                                  espera();
+                                }
+                              },
+                              child: Text(
+                                '${Jogo.alternativas[Jogo.numsEmbaralahados[0]]}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 30),
+                              ),
+                              style: ButtonStyle(
+                                padding:
+                                    MaterialStateProperty.all(EdgeInsets.all(10)),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (!Jogo.clicou) {
+                                  verificaResposta(
+                                      Jogo.pais,
+                                      Jogo.alternativas[
+                                          Jogo.numsEmbaralahados[1]]);
+                                  espera();
+                                }
+                              },
+                              child: Text(
+                                '${Jogo.alternativas[Jogo.numsEmbaralahados[1]]}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 30),
+                              ),
+                              style: ButtonStyle(
+                                padding:
+                                    MaterialStateProperty.all(EdgeInsets.all(10)),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (!Jogo.clicou) {
+                                  verificaResposta(
+                                      Jogo.pais,
+                                      Jogo.alternativas[
+                                          Jogo.numsEmbaralahados[2]]);
+                                  espera();
+                                }
+                              },
+                              child: Text(
+                                '${Jogo.alternativas[Jogo.numsEmbaralahados[2]]}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 30),
+                              ),
+                              style: ButtonStyle(
+                                padding:
+                                    MaterialStateProperty.all(EdgeInsets.all(10)),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (!Jogo.clicou) {
+                                  verificaResposta(
+                                      Jogo.pais,
+                                      Jogo.alternativas[
+                                          Jogo.numsEmbaralahados[3]]);
+                                  espera();
+                                }
+                              },
+                              child: Text(
+                                '${Jogo.alternativas[Jogo.numsEmbaralahados[3]]}',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 30),
+                              ),
+                              style: ButtonStyle(
+                                padding:
+                                    MaterialStateProperty.all(EdgeInsets.all(10)),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                ],
+              ),
             ),
           ),
         ),
