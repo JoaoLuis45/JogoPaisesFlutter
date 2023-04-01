@@ -32,8 +32,9 @@ class _ResultadoState extends State<Resultado> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                'Voce acertou:\n   ${args.acertos} Países!',
-                style: TextStyle(fontSize: 50),
+                'Voce acertou:\n${args.acertos} Países!',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 35),
               ),
               SizedBox(
                 width: double.infinity,
@@ -46,7 +47,7 @@ class _ResultadoState extends State<Resultado> {
                   },
                   child: Text(
                     'Reiniciar',
-                    style: TextStyle(fontSize: 50),
+                    style: TextStyle(fontSize: 35),
                   ),
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(EdgeInsets.all(20)),
