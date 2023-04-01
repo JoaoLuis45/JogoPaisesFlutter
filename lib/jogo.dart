@@ -24,6 +24,20 @@ class Jogo extends StatefulWidget {
 }
 
 class _JogoState extends State<Jogo> {
+  int time = 0;
+
+  void comecaTimer() {
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (Jogo.clicou) {
+          timer.cancel();
+        } else {
+          time++;
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     HomePage2.isLoading = false;
@@ -37,6 +51,8 @@ class _JogoState extends State<Jogo> {
     }
 
     void proximaPergunta() {
+      time = 0;
+      comecaTimer();
       Jogo.clicou = false;
       Jogo.numsEmbaralahados = sorteiaNum();
       Jogo.acertouErrou = '';
@@ -116,6 +132,16 @@ class _JogoState extends State<Jogo> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0,0,0,30),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Tempo: '+
+                        time.toString(),
+                        style: TextStyle(fontSize: 30),
+                      ),
+                    ),
+                  ),
                   Text(
                     'Pergunta ${Jogo.numeroPergunta}',
                     style: TextStyle(fontSize: 25),

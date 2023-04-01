@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 
 class Configs extends StatefulWidget {
-  static bool light = true;
+  static bool light = false;
   static String routeName = 'config';
   const Configs({super.key});
 
@@ -37,17 +37,24 @@ class _ConfigsState extends State<Configs> {
         ),
         body: Container(
           margin: EdgeInsets.all(20),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Tema:'),
-              Switch(
-                  value: Configs.light,
-                  onChanged: (bool value) {
-                    setState(() {
-                      Configs.light = !Configs.light;
-                      ;
-                    });
-                  }),
+              Row(
+                children: [
+                  Text('Tema:',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                  Switch(
+                      value: Configs.light,
+                      onChanged: (bool value) {
+                        setState(() {
+                          Configs.light = !Configs.light;
+                        });
+                      }),
+                ],
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 30, 0, 30),
+                child: Text('Desenvolvido por: João Luís',style: TextStyle(fontSize: 20),))
             ],
           ),
         ),

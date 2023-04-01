@@ -52,7 +52,7 @@ class _ResultadoState extends State<Resultado> {
                   onPressed: () {
                     HomePage2.isLoading = false;
                     Jogo.acertos = 0;
-                    Jogo.numeroPergunta = 0;
+                    Jogo.numeroPergunta = 1;
                     Navigator.pushNamed(context, '/');
                   },
                   child: Text(
