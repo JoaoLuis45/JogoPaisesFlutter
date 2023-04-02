@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:math';
 import 'resultado.dart';
 import 'app_config.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class Jogo extends StatefulWidget {
   static String pais = 'ad';
@@ -25,7 +26,8 @@ class Jogo extends StatefulWidget {
 
 class _JogoState extends State<Jogo> {
   int time = 0;
-
+  int minutes = 0;
+  String textTime = 'Temporizador!';
   void comecaTimer() {
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
@@ -33,6 +35,32 @@ class _JogoState extends State<Jogo> {
           timer.cancel();
         } else {
           time++;
+          if (time >= 60) {
+            minutes += time ~/ 60;
+            time = 0;
+            textTime = 'Tempo: ' +
+                minutes.toString() +
+                ':' +
+                time.toString() +
+                ' minutos';
+          } else if (minutes > 0) {
+            if (time < 10) {
+              textTime = 'Tempo: ' +
+                  minutes.toString() +
+                  ':' +
+                  '0' +
+                  time.toString() +
+                  ' minutos';
+            } else {
+              textTime = 'Tempo: ' +
+                  minutes.toString() +
+                  ':' +
+                  time.toString() +
+                  ' minutos';
+            }
+          } else {
+            textTime = 'Tempo: ' + time.toString() + ' segundos';
+          }
         }
       });
     });
@@ -52,6 +80,7 @@ class _JogoState extends State<Jogo> {
 
     void proximaPergunta() {
       time = 0;
+      minutes = 0;
       comecaTimer();
       Jogo.clicou = false;
       Jogo.numsEmbaralahados = sorteiaNum();
@@ -81,12 +110,16 @@ class _JogoState extends State<Jogo> {
       bool verificacao = false;
       var paisCorreto = args.lista[1][paisCerto];
       if (paisCorreto == resposta) {
+        final soundCorrect = AudioPlayer();
+        soundCorrect.play(AssetSource('sounds/correct.mp3'));
         verificacao = true;
         setState(() {
           Jogo.acertouErrou = 'Acertou!';
           Jogo.acertos++;
         });
       } else {
+        final soundErrado = AudioPlayer();
+        soundErrado.play(AssetSource('sounds/errado.mp3'));
         setState(() {
           Jogo.acertouErrou = 'Errou: ${paisCorreto}';
         });
@@ -113,7 +146,8 @@ class _JogoState extends State<Jogo> {
             IconButton(
                 onPressed: () {
                   Navigator.pushNamed(context, Resultado.routeName,
-                      arguments: ScreenArgumentsResultado(Jogo.acertos));
+                      arguments:
+                          ScreenArgumentsResultado(Jogo.acertos, args.muscic));
                 },
                 icon: Icon(Icons.pause))
           ],
@@ -133,12 +167,12 @@ class _JogoState extends State<Jogo> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0,0,0,30),
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Tempo: '+
-                        time.toString(),
-                        style: TextStyle(fontSize: 30),
+                      child: Text(
+                        textTime,
+                        style: TextStyle(fontSize: 20),
                       ),
                     ),
                   ),
@@ -283,5 +317,6 @@ class _JogoState extends State<Jogo> {
 
 class ScreenArguments {
   final List lista;
-  ScreenArguments(this.lista);
+  final AudioPlayer muscic;
+  ScreenArguments(this.lista, this.muscic);
 }

@@ -4,8 +4,11 @@ import 'jogo.dart';
 import 'resultado.dart';
 import 'dart:async';
 import 'app_config.dart';
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+    
   await initialization(null);
   runApp(MyApp());
 }

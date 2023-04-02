@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:httprequest/app_config.dart';
 import 'package:httprequest/homepage.dart';
 import 'jogo.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class Resultado extends StatefulWidget {
   static const routeName = 'resultado';
@@ -20,15 +21,17 @@ class _ResultadoState extends State<Resultado> {
         ModalRoute.of(context)!.settings.arguments as ScreenArgumentsResultado;
     return MaterialApp(
       theme: ThemeData(
-        brightness: Configs.light? Brightness.dark:Brightness.light,
-        primarySwatch: Colors.purple),
+          brightness: Configs.light ? Brightness.dark : Brightness.light,
+          primarySwatch: Colors.purple),
       home: Scaffold(
         appBar: AppBar(
           actions: [
-            IconButton(onPressed: () => exit(0), icon: Icon(Icons.exit_to_app_sharp))
+            IconButton(
+                onPressed: () => exit(0), icon: Icon(Icons.exit_to_app_sharp))
           ],
-          leading: IconButton(onPressed: () => Navigator.pushNamed(context, 
-          'config'), icon: Icon(Icons.miscellaneous_services)),
+          leading: IconButton(
+              onPressed: () => Navigator.pushNamed(context, 'config'),
+              icon: Icon(Icons.miscellaneous_services)),
           title: Center(
             child: Text(
               'CountryGuess',
@@ -50,6 +53,7 @@ class _ResultadoState extends State<Resultado> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
+                    args.music.stop();
                     HomePage2.isLoading = false;
                     Jogo.acertos = 0;
                     Jogo.numeroPergunta = 1;
@@ -79,5 +83,6 @@ class _ResultadoState extends State<Resultado> {
 
 class ScreenArgumentsResultado {
   final int acertos;
-  ScreenArgumentsResultado(this.acertos);
+  final AudioPlayer music;
+  ScreenArgumentsResultado(this.acertos, this.music);
 }

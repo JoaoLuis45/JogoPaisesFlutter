@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'jogo.dart';
 import 'dart:async';
@@ -6,6 +8,8 @@ import 'dart:io';
 import 'cert.dart';
 import 'package:http/http.dart' as http;
 import 'app_config.dart';
+import 'package:audioplayers/audioplayers.dart';
+
 class HomePage2 extends StatefulWidget {
   static bool isLoading = false;
   const HomePage2({super.key});
@@ -39,9 +43,27 @@ class HomePage2 extends StatefulWidget {
     return [paisesABV, paisesAbvNome];
   }
 
+
   @override
   State<HomePage2> createState() => _HomePage2State();
-}
+  }
+  AudioPlayer aleatorizarMusicas() {
+    var rng = Random();
+    int num = rng.nextInt(3);
+    final player = AudioPlayer();
+    switch (num) {
+      case 0:
+        player.play(AssetSource('sounds/musicas1.mp3'));
+        break;
+      case 1:
+        player.play(AssetSource('sounds/musicas2.mp3'));
+        break;
+      case 2:
+        player.play(AssetSource('sounds/musicas3.mp3'));
+        break;
+    }
+    return player;
+  }
 
 class _HomePage2State extends State<HomePage2> {
   @override
@@ -77,15 +99,15 @@ class _HomePage2State extends State<HomePage2> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
+                      var player = aleatorizarMusicas();
                       if (!HomePage2.isLoading) {
                         setState(() {
                           HomePage2.isLoading = true;
                         });
                       }
-
                       HomePage2.paises().then((value) {
                         Navigator.pushNamed(context, Jogo.routeName,
-                            arguments: ScreenArguments(value));
+                            arguments: ScreenArguments(value, player));
                       });
                     },
                     child: HomePage2.isLoading

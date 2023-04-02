@@ -33,6 +33,7 @@ dependencies:
   http: ^0.13.5
   flutter_native_splash: ^2.0.1+1
   flutter_launcher_icons: ^0.9.2
+  audioplayers: ^3.0.1
 
 
 
@@ -88,6 +89,11 @@ flutter:
   assets:
     - assets/ca/lets-encrypt-r3.pem
     - assets/images/paises.png
+    - assets/sounds/musicas1.mp3
+    - assets/sounds/musicas2.mp3
+    - assets/sounds/musicas3.mp3
+    - assets/sounds/correct.mp3
+    - assets/sounds/errado.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -46,3 +46,7 @@ app.*.map.json
 # Chave PlayStore
 key.properties
 app/upload-keystore.jks
+assets/sounds/musicas2.wav
+assets/sounds/musicas3.wav
+assets/sounds/musicas1.wav
+
