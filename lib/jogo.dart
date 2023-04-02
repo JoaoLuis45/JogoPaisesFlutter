@@ -18,6 +18,8 @@ class Jogo extends StatefulWidget {
   static bool clicou = false;
   static const routeName = 'jogo';
   static int acertos = 0;
+  static var soundCorrect = AudioPlayer();
+  static var soundErrado = AudioPlayer();
   const Jogo({super.key});
 
   @override
@@ -93,7 +95,10 @@ class _JogoState extends State<Jogo> {
         for (int i = 0; i < 3; i++) {
           var paisErrado = args.lista[0][rng.nextInt(272)];
           paisErrado = args.lista[1][paisErrado];
-          paisesErrados.add(paisErrado);
+          if (!paisesErrados.contains(paisErrado) &&
+              !paisesErrados.contains(paisCerto)) {
+            paisesErrados.add(paisErrado);
+          }
         }
         Jogo.alternativas = [];
         paisesErrados.forEach((element) {
@@ -110,16 +115,20 @@ class _JogoState extends State<Jogo> {
       bool verificacao = false;
       var paisCorreto = args.lista[1][paisCerto];
       if (paisCorreto == resposta) {
-        final soundCorrect = AudioPlayer();
-        soundCorrect.play(AssetSource('sounds/correct.mp3'));
+        if (Configs.soundEffects) {
+          Jogo.soundCorrect.play(AssetSource('sounds/correct.mp3'));
+        }
+
         verificacao = true;
         setState(() {
           Jogo.acertouErrou = 'Acertou!';
           Jogo.acertos++;
         });
       } else {
-        final soundErrado = AudioPlayer();
-        soundErrado.play(AssetSource('sounds/errado.mp3'));
+        if (Configs.soundEffects) {
+          Jogo.soundErrado.play(AssetSource('sounds/errado.mp3'));
+        }
+
         setState(() {
           Jogo.acertouErrou = 'Errou: ${paisCorreto}';
         });
@@ -140,14 +149,16 @@ class _JogoState extends State<Jogo> {
       home: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              onPressed: () => Navigator.pushNamed(context, 'config'),
+              onPressed: () => Navigator.pushNamed(context, 'config',
+                  arguments: ScreenArgumentsConfig(
+                      music: args.music, soundEffects: [Jogo.soundCorrect,Jogo.soundErrado])),
               icon: Icon(Icons.miscellaneous_services)),
           actions: [
             IconButton(
                 onPressed: () {
                   Navigator.pushNamed(context, Resultado.routeName,
                       arguments:
-                          ScreenArgumentsResultado(Jogo.acertos, args.muscic));
+                          ScreenArgumentsResultado(Jogo.acertos, args.music,[Jogo.soundCorrect,Jogo.soundErrado]));
                 },
                 icon: Icon(Icons.pause))
           ],
@@ -317,6 +328,6 @@ class _JogoState extends State<Jogo> {
 
 class ScreenArguments {
   final List lista;
-  final AudioPlayer muscic;
-  ScreenArguments(this.lista, this.muscic);
+  final AudioPlayer music;
+  ScreenArguments(this.lista, this.music);
 }

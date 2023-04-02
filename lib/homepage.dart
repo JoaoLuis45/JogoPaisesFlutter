@@ -9,6 +9,7 @@ import 'cert.dart';
 import 'package:http/http.dart' as http;
 import 'app_config.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'app_config.dart';
 
 class HomePage2 extends StatefulWidget {
   static bool isLoading = false;
@@ -43,27 +44,27 @@ class HomePage2 extends StatefulWidget {
     return [paisesABV, paisesAbvNome];
   }
 
-
   @override
   State<HomePage2> createState() => _HomePage2State();
+}
+
+AudioPlayer aleatorizarMusicas() {
+  var rng = Random();
+  int num = rng.nextInt(3);
+  final player = AudioPlayer();
+  switch (num) {
+    case 0:
+      player.play(AssetSource('sounds/musicas1.mp3'));
+      break;
+    case 1:
+      player.play(AssetSource('sounds/musicas2.mp3'));
+      break;
+    case 2:
+      player.play(AssetSource('sounds/musicas3.mp3'));
+      break;
   }
-  AudioPlayer aleatorizarMusicas() {
-    var rng = Random();
-    int num = rng.nextInt(3);
-    final player = AudioPlayer();
-    switch (num) {
-      case 0:
-        player.play(AssetSource('sounds/musicas1.mp3'));
-        break;
-      case 1:
-        player.play(AssetSource('sounds/musicas2.mp3'));
-        break;
-      case 2:
-        player.play(AssetSource('sounds/musicas3.mp3'));
-        break;
-    }
-    return player;
-  }
+  return player;
+}
 
 class _HomePage2State extends State<HomePage2> {
   @override
@@ -79,12 +80,12 @@ class _HomePage2State extends State<HomePage2> {
                 onPressed: () => exit(0), icon: Icon(Icons.exit_to_app_sharp))
           ],
           leading: IconButton(
-              onPressed: () => Navigator.pushNamed(context, 'config'),
+              onPressed: () => Navigator.pushNamed(context, 'config',arguments: ScreenArgumentsConfig(music: null,soundEffects: null)),
               icon: Icon(Icons.miscellaneous_services)),
           title: Center(
             child: Text(
               'CountryGuess',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
         ),
@@ -99,7 +100,12 @@ class _HomePage2State extends State<HomePage2> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      var player = aleatorizarMusicas();
+                      var player;
+                      if (Configs.music) {
+                        player = aleatorizarMusicas();
+                      } else {
+                        player = AudioPlayer();
+                      }
                       if (!HomePage2.isLoading) {
                         setState(() {
                           HomePage2.isLoading = true;

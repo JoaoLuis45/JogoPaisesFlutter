@@ -30,12 +30,13 @@ class _ResultadoState extends State<Resultado> {
                 onPressed: () => exit(0), icon: Icon(Icons.exit_to_app_sharp))
           ],
           leading: IconButton(
-              onPressed: () => Navigator.pushNamed(context, 'config'),
+              onPressed: () => Navigator.pushNamed(context, 'config',
+                  arguments: ScreenArgumentsConfig(music: args.music,soundEffects: args.soundEffects)),
               icon: Icon(Icons.miscellaneous_services)),
           title: Center(
             child: Text(
               'CountryGuess',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
         ),
@@ -84,5 +85,6 @@ class _ResultadoState extends State<Resultado> {
 class ScreenArgumentsResultado {
   final int acertos;
   final AudioPlayer music;
-  ScreenArgumentsResultado(this.acertos, this.music);
+  final List<AudioPlayer> soundEffects;
+  ScreenArgumentsResultado(this.acertos, this.music,this.soundEffects);
 }
