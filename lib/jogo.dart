@@ -95,16 +95,22 @@ class _JogoState extends State<Jogo> {
         for (int i = 0; i < 3; i++) {
           var paisErrado = args.lista[0][rng.nextInt(272)];
           paisErrado = args.lista[1][paisErrado];
-          if (!paisesErrados.contains(paisErrado) &&
-              !paisesErrados.contains(paisCerto)) {
+          if (paisCerto == paisErrado) {
+            var paisErrado = args.lista[0][rng.nextInt(272)];
+            paisErrado = args.lista[1][paisErrado];
+            paisesErrados.add(paisErrado);
+          }else{
             paisesErrados.add(paisErrado);
           }
+          
         }
         Jogo.alternativas = [];
         paisesErrados.forEach((element) {
           Jogo.alternativas.add(element);
         });
         Jogo.alternativas.add(paisCerto);
+        print(paisesErrados);
+        print(paisCerto);
         print(Jogo.alternativas);
         Jogo.img = 'https://flagcdn.com/256x192/${Jogo.pais}.png';
         Jogo.numeroPergunta += 1;
@@ -151,14 +157,15 @@ class _JogoState extends State<Jogo> {
           leading: IconButton(
               onPressed: () => Navigator.pushNamed(context, 'config',
                   arguments: ScreenArgumentsConfig(
-                      music: args.music, soundEffects: [Jogo.soundCorrect,Jogo.soundErrado])),
+                      music: args.music,
+                      soundEffects: [Jogo.soundCorrect, Jogo.soundErrado])),
               icon: Icon(Icons.miscellaneous_services)),
           actions: [
             IconButton(
                 onPressed: () {
                   Navigator.pushNamed(context, Resultado.routeName,
-                      arguments:
-                          ScreenArgumentsResultado(Jogo.acertos, args.music,[Jogo.soundCorrect,Jogo.soundErrado]));
+                      arguments: ScreenArgumentsResultado(Jogo.acertos,
+                          args.music, [Jogo.soundCorrect, Jogo.soundErrado]));
                 },
                 icon: Icon(Icons.pause))
           ],
